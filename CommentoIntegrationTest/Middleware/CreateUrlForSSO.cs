@@ -18,6 +18,7 @@ namespace CommentoIntegrationTest.Middleware
 
         public string DoOperations(ApplicationUser user, string token, string hmac)
         {
+            //TODO: Add checks for right value
             int secretDecoded = SecretKey();
             int tokenDecoded = Decode(token);
             int hmacDecoded = Decode(hmac);
@@ -26,6 +27,7 @@ namespace CommentoIntegrationTest.Middleware
 
             if (hmacDecoded != expectedHmac)
             {
+                //TODO: change return string
                 return "";
             }
 
