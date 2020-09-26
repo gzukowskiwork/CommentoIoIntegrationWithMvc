@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using CommentoIntegrationTest.Middleware;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
+using System;
 
 namespace CommentoIntegrationTest.Controllers
 {
@@ -71,8 +72,14 @@ namespace CommentoIntegrationTest.Controllers
 
         public IActionResult Login([FromQuery] string token, string hmac)
         {
-            HttpContext.Session.SetString("token", token);
-            HttpContext.Session.SetString("hmac", hmac);
+            try
+            {
+                HttpContext.Session.SetString("token", token);
+                HttpContext.Session.SetString("hmac", hmac);
+            }catch(Exception e)
+            {
+                return View();
+            }
             return View();
         }
 
@@ -99,9 +106,11 @@ namespace CommentoIntegrationTest.Controllers
                 await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme,
                     new ClaimsPrincipal(identity));
 
-                return RedirectToPage(_createUrlForSSO.DoOperations(user, token, hmac));
-
-                //return RedirectToAction(nameof(HomeController.Index), "Home");
+                if (token != string.Empty && token != null && hmac != string.Empty && hmac!=null)
+                {
+                    return RedirectToPage(_createUrlForSSO.DoOperations(user, token, hmac));
+                }
+                return RedirectToAction(nameof(HomeController.Index), "Home");
             }
             else
             {

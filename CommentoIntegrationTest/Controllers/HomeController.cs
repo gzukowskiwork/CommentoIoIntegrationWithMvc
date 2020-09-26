@@ -9,12 +9,10 @@ namespace CommentoIntegrationTest.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly PeopleContext _context;
 
-        public HomeController(ILogger<HomeController> logger, PeopleContext context)
+        public HomeController(PeopleContext context)
         {
-            _logger = logger;
             _context = context;
         }
 
