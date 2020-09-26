@@ -76,7 +76,7 @@ namespace CommentoIntegrationTest.Controllers
             {
                 HttpContext.Session.SetString("token", token);
                 HttpContext.Session.SetString("hmac", hmac);
-            }catch(Exception e)
+            }catch
             {
                 return View();
             }

@@ -1,4 +1,5 @@
 using AutoMapper;
+using CommentoIntegrationTest.Extensions;
 using CommentoIntegrationTest.Middleware;
 using CommentoIntegrationTest.Models;
 using Microsoft.AspNetCore.Builder;
@@ -23,23 +24,7 @@ namespace CommentoIntegrationTest
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionString = Configuration["ConnectionString:sqlConnection"];
-
-            //Connection string was hardcoded due to identity not updating database
-            services.AddDbContext<PeopleContext>(options =>
-                options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Commento;Trusted_Connection=True"));
-
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<PeopleContext>();
-
-            services.AddControllersWithViews();
-
-            services.AddAutoMapper(typeof(Startup));
-
-            services.AddScoped<ICreateUrlForSSO, CreateUrlForSSO>();
-
-            services.AddDistributedMemoryCache();
-            services.AddSession();
+            services.ServiceInstaller(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,10 +41,9 @@ namespace CommentoIntegrationTest
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
            
-            
-
             app.UseRouting();
 
             app.UseAuthorization();
