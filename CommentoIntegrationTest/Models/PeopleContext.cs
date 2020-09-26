@@ -1,7 +1,6 @@
 ﻿using CommentoIntegrationTest.Models.Config;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace CommentoIntegrationTest.Models
 {

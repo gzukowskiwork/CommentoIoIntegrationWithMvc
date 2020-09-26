@@ -99,9 +99,6 @@ namespace CommentoIntegrationTest.Controllers
                 await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme,
                     new ClaimsPrincipal(identity));
 
-                
-
-                
                 return RedirectToPage(_createUrlForSSO.DoOperations(user, token, hmac));
 
                 //return RedirectToAction(nameof(HomeController.Index), "Home");
